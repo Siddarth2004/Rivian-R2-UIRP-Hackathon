@@ -15,3 +15,8 @@ Thus, we hope that our project can be utilized by large scale car manufacturers 
 EV Charger Dataset: https://www.kaggle.com/datasets/saketpradhan/electric-and-alternative-fuel-charging-stations?select=Electric+and+Alternative+Fuel+Charging+Stations.csv
 
 Population Density Dataset: https://data.humdata.org/dataset/kontur-population-dataset-3km
+
+Image below shows our chicago map.html, purple markers showcase our recommendations for EV charging locations, red indicates current charging locations. Red hexagons show areas of small populations, green locations show areas of high populations.
+
+![image](https://github.com/Siddarth2004/Rivian-R2-UIRP-Hackathon/assets/112680022/b5ce680b-5dbc-4e6b-a5bb-67653c8ab5a1)
+
