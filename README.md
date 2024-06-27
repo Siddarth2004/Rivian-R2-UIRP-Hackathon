@@ -1,6 +1,8 @@
 # Rivian-R2-UIRP-Hackathon
 
-Team Members: Alex, Akshat, Sudar, Mayank, Will, Siddarth In this project, we utilized two datasets, an EV charger dataset that gives us data on all the EV chargers in the US, and a population density dataset, which allows to visualize population data by county. Using this, we have developed an algorithm that can decide on charger allocation based on availability, accessibility, population density, and proximity to closest EV charger.
+Team Members: Alex, Akshat, Sudar, Mayank, Will, Siddarth 
+
+In this project, we utilized two datasets, an EV charger dataset that gives us data on all the EV chargers in the US, and a population density dataset, which allows to visualize population data by county. Using this, we have developed an algorithm that can decide on charger allocation based on availability, accessibility, population density, and proximity to closest EV charger.
 
 The EV Charger Dataset contains a list of all chargers in the US, sorted by location, and by type of station (Gas, Electric, etc), and we correlated the location data from this dataset and mapped it onto the world map by converting the location into its latitudinal and longitudinal coordinates. The population density data had split the land masses of the US into small "hexagons" and using the population data of this particular hexagon and existing EV chargers, we were able to decide whether that hexagon needs a charger and if it does, where exactly does it need to be located.
 
