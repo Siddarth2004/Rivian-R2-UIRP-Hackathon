@@ -5,7 +5,7 @@ from shapely.geometry import Polygon, MultiPolygon
 from shapely.geometry import Point
 from pyproj import CRS  # for coordinate reference system handling
 # Step 2: Read the .gpkg file using GeoPandas
-gdf = gpd.read_file('kontur_population_3km_plz_work.gpkg')
+gdf = gpd.read_file('3km_world.gpkg')
 gdf_4326 = gdf.to_crs(epsg=4326)
 # Extract the first row's geometry
 # first_polygon = gdf_4326.loc[3000, 'geometry']
@@ -25,13 +25,10 @@ for idx, row in gdf_4326.iterrows():
     # polygon_coords = row['geometry'].exterior.coords
     polygon_coords = row['geometry'].centroid
     poly_arr.append(polygon_coords)
-
     all_coordinates.append(poly_arr)
     polygon_populations = row['population']
     all_populations.append(polygon_populations)
-
 def get_populations():
     return all_populations
-
-def get_coordinates(): 
-    return all_coordinates 
+def get_coordinates():
+    return all_coordinates
