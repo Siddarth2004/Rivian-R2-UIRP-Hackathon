@@ -3,7 +3,9 @@ import folium
 import numpy as np
 from populationDensities import get_coordinates
 from populationDensities import get_populations 
+from shapely.geometry import Point
 from folium import Circle
+from shapely.geometry import Polygon, MultiPolygon
 
 # Function to calculate hexagon vertices
 def calculate_hexagon_vertices(center_lat, center_lng, size):
@@ -31,9 +33,11 @@ chicago_coordinates = chicago_elec_data[['Latitude', 'Longitude']]
 
 # Create a map centered around Chicago
 chicago_map = folium.Map(location=[41.8781, -87.6298], zoom_start=12)
+curEVLocations = []
 
 for index, row in chicago_elec_data.iterrows():
     folium.Marker([row['Latitude'], row['Longitude']], popup=row['Station Name'], icon=folium.Icon(color='red')).add_to(chicago_map)
+    curEVLocations.append((row['Latitude'], row['Longitude']))
 
 # Print the DataFrame to verify
 # print(df.head())
@@ -48,12 +52,16 @@ curCord = get_coordinates()
 curDens = get_populations()
 print(len(curCord))
 
+AllHexData = [] #Will contain: [(Lat, Long), [list of EV chargers], population]
+
 # print(curCord)
 
 # Add markers for valid coordinates
 for index in range(len(curCord)):
-    lat = curCord[index].y
-    lng = curCord[index].x
+    # print(curCord[index])
+    curHex = Point(curCord[index][7])
+    lat = curHex.y
+    lng = curHex.x
     density = curDens[index]
     if is_within_chicago(lat, lng):
         # print("Lat: " + str(lat) + " Lang: " + str(lng))
@@ -61,7 +69,26 @@ for index in range(len(curCord)):
         # Add circle with radius 3km (3000 meters)
         # Normalize density to a range between 0 and 1
         normalized_density = (density - min_density) / (max_density - min_density)
-        hexagon_vertices = calculate_hexagon_vertices(lat, lng, hexagon_size_degrees)
+        # hexagon_vertices = calculate_hexagon_vertices(lat, lng, hexagon_size_degrees)
+        # Swap (latitude, longitude) to (longitude, latitude)
+        curCord_swapped = [(lng, lat) for (lat, lng) in curCord[index][0:6]]
+
+        
+        currentBoundary = Polygon(curCord_swapped) 
+        currentHex = []
+        EVsinBoundary = []
+        for allEVs in curEVLocations:
+            if currentBoundary.contains(Point(allEVs)):
+                EVsinBoundary.append(allEVs)
+
+
+        currentHex.append((lat,lng))
+        currentHex.append(EVsinBoundary)
+        currentHex.append(density)
+        AllHexData.append(currentHex)
+        # print(currentHex)
+
+        hexagon_vertices = curCord_swapped
         
         # Scale radius based on normalized density (adjust this factor as needed)
         # radius = 3464
@@ -88,6 +115,8 @@ for index in range(len(curCord)):
             fill_opacity=0.7,
             popup=f'Population Density: {density}'
         ).add_to(chicago_map)
+
+# print(AllHexData)
 
 # Save the map as an HTML file
 chicago_map.save('chicago_map.html')
