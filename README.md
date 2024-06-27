@@ -20,3 +20,5 @@ Image below shows our chicago map.html, purple markers showcase our recommendati
 
 ![image](https://github.com/Siddarth2004/Rivian-R2-UIRP-Hackathon/assets/112680022/b5ce680b-5dbc-4e6b-a5bb-67653c8ab5a1)
 
+Youtube link: https://youtu.be/MfCeADfFM3w
+
